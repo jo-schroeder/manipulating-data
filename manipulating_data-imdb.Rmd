@@ -1,0 +1,82 @@
+---
+title: "manipulating_data"
+output: html_document
+date: "2024-11-06"
+---
+
+
+
+```{r setup, include=FALSE}
+library(tidyverse)
+
+setwd("~/Documents/git/imdb-movies/")
+
+imdb <- read_csv("archive.zip")
+```
+
+# What does the data look like originally?
+
+```{r}
+head(imdb, 5)
+```
+
+Without any data manipulation, we can get insights into many research questions. For example: What is the relationship between IMDB rating and metascore?
+```{r}
+imdb %>% 
+ggplot(aes(x = IMDB_Rating, y = Meta_score)) + 
+  geom_point()
+
+# None below 7.5, makes sense because this dataset is for highest ratings.
+imdb %>% 
+ggplot(aes(x = IMDB_Rating, y = Meta_score)) + 
+  geom_point() +
+  xlim(0, 10)
+
+# None below 7.5, makes sense because this dataset is for highest ratings.
+imdb %>% mutate(label = ifelse(Meta_score < 40, Series_Title, NA)) %>%
+ggplot(aes(x = IMDB_Rating, y = Meta_score, label = label)) + 
+  geom_point() +
+  geom_label(position = "dodge")
+```
+
+The original unit of analysis is series title or movie, but what if I'm interested in something else?
+```{r}
+#For example, look at the genre column
+imdb$Genre
+
+# We can easily split this out into unique observations
+imdb %>% separate_rows(Genre, sep = ", ")
+
+# This is obviously not helpful if we're studying movies, but now we can answer new questions about genre. For example, what is the average IMDB rating by genre?
+imdb %>% separate_rows(Genre, sep = ", ") %>%
+  group_by(Genre) %>%
+  summarise(avg_rating = mean(IMDB_Rating)) %>% arrange(-avg_rating)
+
+imdb %>% separate_rows(Genre, sep = ", ") %>%
+  group_by(Genre) %>%
+  summarise(avg_rating = mean(Meta_score, na.rm = TRUE)) %>% arrange(-avg_rating)
+```
+
+We can do the same thing for star: This is four columns but arbitrarily...
+```{r}
+# We can easily split this out into unique observations
+imdb %>% pivot_longer(cols = starts_with("Star"), values_to = "Star")  %>%
+  group_by(Star) %>% summarise(avg_gross = mean(Gross)) %>% arrange(-avg_gross)
+# This is interesting.... how many films make up this avg_gross?
+
+imdb %>% pivot_longer(cols = starts_with("Star"), values_to = "Star")  %>%
+  group_by(Star) %>% summarise(n_films_in_top = n(), avg_gross = mean(Gross, na.rm = TRUE)) %>% arrange(-n_films_in_top)
+
+p <- imdb %>% pivot_longer(cols = starts_with("Star"), values_to = "Star")  %>% arrange(Released_Year) %>%
+  group_by(Star, Released_Year) %>% mutate(n_films_in_top = n()) %>% ungroup(Released_Year) %>% mutate(cumulative_top_films = cumsum(n_films_in_top), max = max(cumulative_top_films)) %>% filter(max > 6) %>%
+  ggplot(aes(x = Released_Year, y = cumulative_top_films, group = Star, 
+             text = paste(Released_Year, ":", Star, "stars in", Series_Title))) +
+  geom_line(aes(color = Star)) +
+  geom_point(aes(color = Star)) 
+
+library(plotly)
+ggplotly(p, tooltip = c("text"))
+
+imdb %>% pivot_longer(cols = starts_with("Star"), values_to = "Star") %>% group_by(Star) %>% mutate(n_top_films = n()) %>% arrange(-n_top_films)
+```
+

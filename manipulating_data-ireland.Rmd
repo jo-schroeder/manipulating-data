@@ -1,0 +1,122 @@
+---
+title: 'DH: Working with Data'
+output:
+  pdf_document: default
+  html_document: default
+date: "2024-11-06"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(readxl)
+
+setwd("~/Documents/git/manipulating-data/")
+
+ireland <- read_csv("British_Troops_Ireland.csv") %>%
+  mutate(Date = mdy(Date) - years(100))
+```
+
+What does the data look like originally?
+
+![](map.jpg)
+
+We have a digitized map of English terror in Ireland over a 12 month period. Looking at just the textual information, we can see some structure. Structure = Data! Let's turn the text into data for analysis.
+
+```{r}
+head(ireland, 5)
+```
+
+Here we've taken the textual information and broken out the three main structural components: the date, the location information, and the description.
+
+Without any further data manipulation, we can already answer some research questions we might have. 
+
+For example, how many events occurred over the time frame? What did the rate of event occurence look like? 
+
+```{r}
+# This visualization groups events by month and year, graphing the number of events in each month over the time period
+ireland %>% mutate(month = my(paste0(month(Date), "-", year(Date)))) %>%
+  group_by(month) %>% summarise(count = n()) %>%
+  ggplot(aes(x = month, y = count)) + 
+    geom_col()
+
+# To begin answering our questions, we can see there was a fairly dramatic increase in events in the time frame.
+
+# We don't have to group the events by month if we want more granularity in our visualization.
+ireland %>%
+  ggplot(aes(x = Date)) + 
+    geom_histogram(stat = "count")
+
+# The dramatic increase in events is still apparent, but it looks somewhat different when events aren't grouped.
+
+# Both of these visualizations are looking at the temporal density of our data
+```
+
+We can also explore the events by location. For example, how many events occurred in each location?
+
+```{r, fig.height=12, fig.width=10}
+# This visualization groups events by location, graphing the number of events in each distinct location
+ireland %>% 
+  group_by(Location) %>% summarise(count = n()) %>%
+  ggplot(aes(x = count, y = reorder(Location, count))) + 
+    geom_col()
+
+# We can see many places have only one event. 
+
+# When doing exploratory data analysis, generally we are looking for patterns or broad strokes trends in our dataset. When we have many observations of one, like many places with only one event, we might think about ways we can group observations to help us find patterns. 
+
+# Looking at the location data, we can see that it includes county information. We don't have to get rid of the specific location data (in fact, we definitely don't want to), but for exploratory purposes pulling out a grouping variable can help us see broader trends
+
+# This external dataset containing county name can help us group our observations, which are a bit untidy.
+names <- read_excel("P-1916TBL1.1.xlsx", skip = 2) %>% drop_na() %>% filter(Area != "State") %>% pull(Area)
+names <- c(names, "Dublin")
+
+# We standardize the county names and create a new variable for them, grouping by this new county variable, and graphing the number of events in each distinct county
+ireland %>% 
+  mutate(county = str_extract(Location, paste(names, collapse = "|"))) %>%
+  mutate(county = case_when(
+    str_detect(Location, "Castleleiny, Loughmore") ~ "Tipperary",
+    str_detect(Location, "King's Co.") ~ "Offaly",
+    str_detect(Location, "Enniscorthy") ~ "Wexford",
+    str_detect(Location, "Tippenny") ~ "Tipperary",
+    .default = county)) %>%
+  group_by(county) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = count, y = reorder(county, count))) + 
+    geom_col()
+```
+
+We might notice that, unsurprisingly, more urban areas have a higher number of events. Finding unsurprising results is not uncommon in exploratory data analysis. If we have some familiarity with the subject, too, we might find some more surprising observations. We might have the contextual knowledge, for example, that some of the less populated counties have more events than we might expect.
+
+Did any counties have a disproportionate number of events according to population?
+
+To quantify this type of hunch or insight, we can bring in an external dataset, in this case, population estimates from 1916.
+
+```{r, fig.height=12, fig.width=10}
+# Here we read in a speadsheet containing population data and clean it up a bit.
+historic_populations <- read_excel("P-1916TBL1.1.xlsx", skip = 2) %>% drop_na() %>%
+  filter(Area != "State") %>% select(Area, pop = `1911`) %>%
+  mutate(county = ifelse(str_detect(Area, "Dublin county|Dublin city"), "Dublin", Area)) %>%
+  group_by(county) %>% mutate(pop = sum(pop)) %>% distinct(county, pop)
+
+# This visual is identical to the previous, except instead of graphing the number of events we are graphing the number per 100,000 population, so that urban and rural counties are on an even playing field
+ireland %>% 
+  mutate(county = str_extract(Location, paste(names, collapse = "|"))) %>%
+  mutate(county = case_when(
+    str_detect(Location, "Castleleiny, Loughmore") ~ "Tipperary",
+    str_detect(Location, "King's Co.") ~ "Offaly",
+    str_detect(Location, "Enniscorthy") ~ "Wexford",
+    str_detect(Location, "Tippenny") ~ "Tipperary",
+    .default = county)) %>%
+  left_join(historic_populations, by = c("county")) %>%
+  group_by(county) %>%
+  summarise(count_per_pop = (n()/pop) * 100000) %>% distinct() %>%
+  ggplot(aes(x = count_per_pop, y = reorder(county, count_per_pop))) + 
+  geom_col()
+```
+
+Next:
+Decisions made to create more groups by pulling out parts of the description (e.g. type and actor)
+
+Geocode locations to bring in more spatial information
+

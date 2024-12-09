@@ -1,0 +1,293 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={DH: Working with Data},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{DH: Working with Data}
+\author{}
+\date{\vspace{-2.5em}2024-11-06}
+
+\begin{document}
+\maketitle
+
+What does the data look like originally?
+
+\includegraphics{map.jpg}
+
+We have a digitized map of English terror in Ireland over a 12 month
+period. Looking at just the textual information, we can see some
+structure. Structure = Data! Let's turn the text into data for analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(ireland, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+##   Date       Location                    Description                            
+##   <date>     <chr>                       <chr>                                  
+## 1 1920-09-30 Achonry, Co. Sligo          creameries burned by police            
+## 2 1920-10-17 Anbally, Cummer, Co. Galway shot up by police                      
+## 3 1920-07-16 Arklow, Co. Wicklow         houses bombed and wrecked by police    
+## 4 1920-07-16 Arklow, Co. Wicklow         houses bombed and wrecked by police    
+## 5 1920-10-16 Athlone, Co. Westmeath      Printing Works and some houses sacked ~
+\end{verbatim}
+
+Here we've taken the textual information and broken out the three main
+structural components: the date, the location information, and the
+description.
+
+Without any further data manipulation, we can already answer some
+research questions we might have.
+
+For example, how many events occurred over the time frame? What did the
+rate of event occurence look like?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This visualization groups events by month and year, graphing the number of events in each month over the time period}
+\NormalTok{ireland }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month =} \FunctionTok{my}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\FunctionTok{month}\NormalTok{(Date), }\StringTok{"{-}"}\NormalTok{, }\FunctionTok{year}\NormalTok{(Date)))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(month) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ month, }\AttributeTok{y =}\NormalTok{ count)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{manipulating_data-ireland_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# To begin answering our questions, we can see there was a fairly dramatic increase in events in the time frame.}
+
+\CommentTok{\# We don\textquotesingle{}t have to group the events by month if we want more granularity in our visualization.}
+\NormalTok{ireland }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Date)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in geom_histogram(stat = "count"): Ignoring unknown parameters:
+## `binwidth`, `bins`, and `pad`
+\end{verbatim}
+
+\includegraphics{manipulating_data-ireland_files/figure-latex/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The dramatic increase in events is still apparent, but it looks somewhat different when events aren\textquotesingle{}t grouped.}
+
+\CommentTok{\# Both of these visualizations are looking at the temporal density of our data}
+\end{Highlighting}
+\end{Shaded}
+
+We can also explore the events by location. For example, how many events
+occurred in each location?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This visualization groups events by location, graphing the number of events in each distinct location}
+\NormalTok{ireland }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(Location) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ count, }\AttributeTok{y =} \FunctionTok{reorder}\NormalTok{(Location, count))) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{manipulating_data-ireland_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# We can see many places have only one event. }
+
+\CommentTok{\# When doing exploratory data analysis, generally we are looking for patterns or broad strokes trends in our dataset. When we have many observations of one, like many places with only one event, we might think about ways we can group observations to help us find patterns. }
+
+\CommentTok{\# Looking at the location data, we can see that it includes county information. We don\textquotesingle{}t have to get rid of the specific location data (in fact, we definitely don\textquotesingle{}t want to), but for exploratory purposes pulling out a grouping variable can help us see broader trends}
+
+\CommentTok{\# This external dataset containing county name can help us group our observations, which are a bit untidy.}
+\NormalTok{names }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"P{-}1916TBL1.1.xlsx"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Area }\SpecialCharTok{!=} \StringTok{"State"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Area)}
+\NormalTok{names }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(names, }\StringTok{"Dublin"}\NormalTok{)}
+
+\CommentTok{\# We standardize the county names and create a new variable for them, grouping by this new county variable, and graphing the number of events in each distinct county}
+\NormalTok{ireland }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{county =} \FunctionTok{str\_extract}\NormalTok{(Location, }\FunctionTok{paste}\NormalTok{(names, }\AttributeTok{collapse =} \StringTok{"|"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{county =} \FunctionTok{case\_when}\NormalTok{(}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Castleleiny, Loughmore"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Tipperary"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"King\textquotesingle{}s Co."}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Offaly"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Enniscorthy"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Wexford"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Tippenny"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Tipperary"}\NormalTok{,}
+    \AttributeTok{.default =}\NormalTok{ county)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(county) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ count, }\AttributeTok{y =} \FunctionTok{reorder}\NormalTok{(county, count))) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{manipulating_data-ireland_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+We might notice that, unsurprisingly, more urban areas have a higher
+number of events. Finding unsurprising results is not uncommon in
+exploratory data analysis. If we have some familiarity with the subject,
+too, we might find some more surprising observations. We might have the
+contextual knowledge, for example, that some of the less populated
+counties have more events than we might expect.
+
+Did any counties have a disproportionate number of events according to
+population?
+
+To quantify this type of hunch or insight, we can bring in an external
+dataset, in this case, population estimates from 1916.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Here we read in a speadsheet containing population data and clean it up a bit.}
+\NormalTok{historic\_populations }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"P{-}1916TBL1.1.xlsx"}\NormalTok{, }\AttributeTok{skip =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Area }\SpecialCharTok{!=} \StringTok{"State"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Area, }\AttributeTok{pop =} \StringTok{\textasciigrave{}}\AttributeTok{1911}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{county =} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(Area, }\StringTok{"Dublin county|Dublin city"}\NormalTok{), }\StringTok{"Dublin"}\NormalTok{, Area)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(county) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{pop =} \FunctionTok{sum}\NormalTok{(pop)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(county, pop)}
+
+\CommentTok{\# This visual is identical to the previous, except instead of graphing the number of events we are graphing the number per 100,000 population, so that urban and rural counties are on an even playing field}
+\NormalTok{ireland }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{county =} \FunctionTok{str\_extract}\NormalTok{(Location, }\FunctionTok{paste}\NormalTok{(names, }\AttributeTok{collapse =} \StringTok{"|"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{county =} \FunctionTok{case\_when}\NormalTok{(}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Castleleiny, Loughmore"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Tipperary"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"King\textquotesingle{}s Co."}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Offaly"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Enniscorthy"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Wexford"}\NormalTok{,}
+    \FunctionTok{str\_detect}\NormalTok{(Location, }\StringTok{"Tippenny"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Tipperary"}\NormalTok{,}
+    \AttributeTok{.default =}\NormalTok{ county)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(historic\_populations, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"county"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(county) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count\_per\_pop =}\NormalTok{ (}\FunctionTok{n}\NormalTok{()}\SpecialCharTok{/}\NormalTok{pop) }\SpecialCharTok{*} \DecValTok{100000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ count\_per\_pop, }\AttributeTok{y =} \FunctionTok{reorder}\NormalTok{(county, count\_per\_pop))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## i Please use `reframe()` instead.
+## i When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'county'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\includegraphics{manipulating_data-ireland_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+Next: Decisions made to create more groups by pulling out parts of the
+description (e.g.~type and actor)
+
+Geocode locations to bring in more spatial information
+
+\end{document}
